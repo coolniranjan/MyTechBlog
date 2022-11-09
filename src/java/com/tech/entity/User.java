@@ -17,6 +17,9 @@ public class User {
     private Timestamp dateTime;
     private String about;
     
+
+    
+    
      public User(int id, String name, String email, String password, String gender, Timestamp dateTime, String about) {
         this.id = id;
         this.name = name;
@@ -96,5 +99,7 @@ public class User {
     public void setAbout(String about) {
         this.about = about;
     }
+    
 
 }
+

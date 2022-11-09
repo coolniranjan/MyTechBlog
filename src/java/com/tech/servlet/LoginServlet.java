@@ -4,25 +4,24 @@
  */
 package com.tech.servlet;
 
+
+import com.tech.entity.Message;
 import com.tech.dao.UserDao;
 import com.tech.entity.User;
 import com.tech.helper.ConnectionProvider;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author PC
  */
-@WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
-@MultipartConfig
-public class RegisterServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,33 +36,30 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
+            
+           
+            String email=request.getParameter("email");
+            String pass=request.getParameter("password");
+            UserDao dao=new UserDao(ConnectionProvider.getConnection());
+            User u=dao.GetEmailAndPass(email, pass);
+            if (u == null) {
+                //login.................
+//                error///
+//                out.println("Invalid Details..try again");
+                Message msg = new Message("Invalid Details ! try with another", "error", "alert-danger");
 
-            //            fetch all form data
-            String check = request.getParameter("check");
-            if (check == null) {
-                out.println("box not checked!");
+                HttpSession s = request.getSession();
+                s.setAttribute("msg", msg);
+
+                response.sendRedirect("login.jsp");
             } else {
-                //baki ka data yaha nikalna..
-                String name = request.getParameter("user_name");
-                String email = request.getParameter("user_email");
-                String password = request.getParameter("user_password");
-                String gender = request.getParameter("gender");
-                String about = request.getParameter("about");
-                
+                //......
+//                login success
+                HttpSession s = request.getSession();
+                s.setAttribute("currentUser", u);
+                response.sendRedirect("profile.jsp");
 
-                //create user object and set all data to that object..
-                User user = new User(name, email, password, gender, about);
-
-                //create a user daao object..
-                UserDao dao = new UserDao(ConnectionProvider.getConnection());
-                if (dao.saveUser(user)) {
-//                save..
-                    out.println("done");
-                } else {
-                    out.println("error");
-                }
             }
-
         }
     }
 

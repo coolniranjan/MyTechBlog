@@ -9,7 +9,6 @@ import com.tech.entity.User;
 import java.sql.*;
 
 public class UserDao {
-
     private Connection con;
 
     public UserDao(Connection con) {
@@ -38,5 +37,41 @@ public class UserDao {
         return f;
 
     }
+    
+    public User GetEmailAndPass(String email,String password){
+        
+        User user=null;
+        try {
+            String query="select * from registration where email=? and password=?";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
+
+            ResultSet set = pstmt.executeQuery();
+            if (set.next()) {
+                user=new User();
+                
+//             data from db
+                String name = set.getString("name");
+//             set to user object
+                user.setName(name);
+
+                user.setId(set.getInt("id"));
+                user.setEmail(set.getString("email"));
+                user.setPassword(set.getString("password"));
+                user.setGender(set.getString("gender"));
+                user.setAbout(set.getString("about"));
+                user.setDateTime(set.getTimestamp("rdate"));
+                
+                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
+        return user;
+    
+}
 
 }
