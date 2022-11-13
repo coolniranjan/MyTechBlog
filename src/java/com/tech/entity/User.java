@@ -3,12 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.tech.entity;
+
 import java.sql.*;
+
 /**
  *
  * @author PC
  */
 public class User {
+
     private int id;
     private String name;
     private String email;
@@ -16,11 +19,8 @@ public class User {
     private String gender;
     private Timestamp dateTime;
     private String about;
-    
 
-    
-    
-     public User(int id, String name, String email, String password, String gender, Timestamp dateTime, String about) {
+    public User(int id, String name, String email, String password, String gender, Timestamp dateTime, String about) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -33,16 +33,23 @@ public class User {
     public User() {
     }
 
-    public User(String name, String email, String password, String gender,  String about) {
+    public User(String name, String email, String password, String gender, String about) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.gender = gender;       
-        this.about = about;
-    }
-    
-//    getters and setters
+        this.gender = gender;
+        this.about = about; 
+}
 
+public User(int id, String name, String email, String password, String about) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.about = about;
+}
+
+//    getters and setters
     public int getId() {
         return id;
     }
@@ -99,7 +106,5 @@ public class User {
     public void setAbout(String about) {
         this.about = about;
     }
-    
 
 }
-

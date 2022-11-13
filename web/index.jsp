@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <style>
             .banner-background{
-             clip-path: polygon(30% 0%, 70% 0%, 100% 0, 100% 91%, 63% 100%, 22% 91%, 0 99%, 0 0);
+                clip-path: polygon(30% 0%, 70% 0%, 100% 0, 100% 91%, 63% 100%, 22% 91%, 0 99%, 0 0);
             }
         </style>
     </head>
@@ -34,13 +34,12 @@
                 <div class="container">
                     <h3>Welcome to TechBlog !</h3>
                     <p>George Owen was a professor at MIT's Department of Naval Architecture and Marine Engineering between 1915 and 1941, designing more than 200 sailing boats and commercial ships. He was also a competitive sailor and conceived the Tech Dinghy for student </p>
-                    <a href="register.jsp" class="btn btn-outline-light btn-lg">Register </a>
-                    <a href="login.jsp" class="btn btn-outline-light btn-lg">Login </a>
+<a href="register.jsp" class="btn btn-outline-light btn-lg">Register </a>
+                <a href="login.jsp" class="btn btn-outline-light btn-lg">Login </a>
                 </div>
                 
             </div>
         </div>
-        
         <!--//cards-->
 
         <div class="container">
@@ -122,7 +121,7 @@
 
         </div>
 
-<!--js-->
+        <!--js-->
 
         <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

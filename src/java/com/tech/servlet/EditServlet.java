@@ -5,24 +5,22 @@
 package com.tech.servlet;
 
 import com.tech.dao.UserDao;
+import com.tech.entity.Message;
 import com.tech.entity.User;
 import com.tech.helper.ConnectionProvider;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author PC
  */
-@WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
-@MultipartConfig
-public class RegisterServlet extends HttpServlet {
+public class EditServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,33 +35,44 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet EditServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+      
+            String email=request.getParameter("user_email");
+            String name=request.getParameter("user_name");
+            String pass=request.getParameter("user_password");
+            String about=request.getParameter("user_about");
+//            out.println(email);
+            //get the user from the session...
+            HttpSession s = request.getSession();
+            User user = (User) s.getAttribute("currentUser");
+            user.setEmail(email);
+            user.setName(name);
+            user.setPassword(pass);
+            user.setAbout(about);
+            
+            //update database....
+            UserDao userDao = new UserDao(ConnectionProvider.getConnection());
 
-            //            fetch all form data
-            String check = request.getParameter("check");
-            if (check == null) {
-                out.println("box not checked!");
+            boolean ans = userDao.updateUser(user);
+            if (ans) {
+                out.print("updated to db");
             } else {
-                //baki ka data yaha nikalna..
-                String name = request.getParameter("user_name");
-                String email = request.getParameter("user_email");
-                String password = request.getParameter("user_password");
-                String gender = request.getParameter("gender");
-                String about = request.getParameter("about");
-                
+                out.println("not updated..");
+                Message msg = new Message("Something went wrong..", "error", "alert-danger");
+                s.setAttribute("msg", msg);
 
-                //create user object and set all data to that object..
-                User user = new User(name, email, password, gender, about);
-
-                //create a user daao object..
-                UserDao dao = new UserDao(ConnectionProvider.getConnection());
-                if (dao.saveUser(user)) {
-//                save..
-                    out.println("done");
-                } else {
-                    out.println("error");
-                }
             }
 
+            response.sendRedirect("profile.jsp");
+//            
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -105,6 +114,5 @@ public class RegisterServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
 }
-     
