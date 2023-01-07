@@ -54,6 +54,9 @@ User user=(User)session.getAttribute("currentUser");
                     <li class="nav-item">
                         <a class="nav-link" href="contact.jsp"> <span class="	fa fa-address-card-o"></span> Contact</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.jsp"> <span class="	fa fa-address-card-o"></span> Post</a>
+                    </li>
 
 
 
