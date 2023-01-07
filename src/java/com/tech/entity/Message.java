@@ -1,7 +1,5 @@
 package com.tech.entity;
-
 public class Message {
-
     private String content;
     private String type;
     private String cssClass;

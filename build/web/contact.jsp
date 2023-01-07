@@ -1,7 +1,5 @@
 <%@page import="com.tech.entity.User"%>
 <%@page errorPage="error.jsp" %>
-<%@page import="jakarta.servlet.http.HttpSession" %>
-<%@page import="com.tech.entity.User" %>
 <%
 User user=(User)session.getAttribute("currentUser");
  if (user == null) {
@@ -13,7 +11,7 @@ User user=(User)session.getAttribute("currentUser");
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>contact</title>
         <!--css-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link href="css/mystyle.css" rel="stylesheet" type="text/css"/>
@@ -114,11 +112,11 @@ User user=(User)session.getAttribute("currentUser");
                                             </tbody>
                                         </table>
                                     </div>
-                                                    
+
                                     <!--profile edit-->
                                     <div id="profile-edit" style="display: none;">
                                         <h3 class="mt-2">Please Edit Carefully</h3>
-                                        <form action="EditServlet" method="post" >
+                                        <form action="EditServlet" method="post" ">
                                             <table class="table">
                                                 <tr>
                                                     <td>ID :</td>
@@ -148,12 +146,12 @@ User user=(User)session.getAttribute("currentUser");
 
                                                     </td>
                                                 </tr>
-<!--                                                <tr>
-                                                    <td>New Profile:</td>
-                                                    <td>
-                                                        <input type="file" name="image" class="form-control" >
-                                                    </td>
-                                                </tr>-->
+                                                <!--                                                <tr>
+                                                                                                    <td>New Profile:</td>
+                                                                                                    <td>
+                                                                                                        <input type="file" name="image" class="form-control" >
+                                                                                                    </td>
+                                                                                                </tr>-->
 
                                             </table>
 
@@ -183,24 +181,45 @@ User user=(User)session.getAttribute("currentUser");
             </div>
         </nav>
         <!--end of toggle model-->
-        
-        <!--banner-->
-        
-        
-        <div class="container-fluid m-0 p-0 banner-background">
+        <div class="container mt-3">
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputEmail4">Email</label>
+                       
+                        <input type="text" value="<%= user.getEmail()%>" class="form-control" readonly="readonly">
+                    </div>
 
-            <div class="jumbotron primary-background text-white">
-                <div class="container">
-                    <h3>Welcome to TechBlog  <%= user.getName() %></h3>
-                    <p>George Owen was a professor at MIT's Department of Naval Architecture and Marine Engineering between 1915 and 1941, designing more than 200 sailing boats and commercial ships. He was also a competitive sailor and conceived the Tech Dinghy for student </p>
-                    
                 </div>
-
-            </div>
+                <div class="form-group">
+                    <label for="inputAddress">Address</label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress2">Address 2</label>
+                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputCity">City</label>
+                        <input type="text" class="form-control" id="inputCity">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">State</label>
+                        <select id="inputState" class="form-control">
+                            <option selected>Choose...</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">Zip</label>
+                        <input type="text" class="form-control" id="inputZip">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
-
-
-
         <!--js-->
 
         <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>

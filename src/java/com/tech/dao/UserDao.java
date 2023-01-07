@@ -32,7 +32,6 @@ public class UserDao {
             pstmt.executeUpdate();
             f = true;
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return f;
 
