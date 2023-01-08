@@ -7,6 +7,7 @@
 <%@page import="com.tech.entity.categories" %>
 <%@ page import = "java.io.*,java.util.*,java.sql.*"%>
 <%@page import="com.tech.helper.*" %>
+<%@page import="com.blog.servlet.*" %>
 
 <%
 User user=(User)session.getAttribute("currentUser");
@@ -183,50 +184,51 @@ User user=(User)session.getAttribute("currentUser");
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Enter Post Details..</h5>
+                        <h5 class="modal-title" id="heading">Enter Post Details..</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form id="addPostForm" method="post" action="addPostServlet">
 
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Categories</label>
-                                <select class="form-control" id="exampleFormControlSelect1">
+                                <select class="form-control" id="exampleFormControlSelect1" name="cid">
                                     <option selected disabled>--select categories--</option>
                                     <%
                                      PostCatDao pt=new PostCatDao(ConnectionProvider.getConnection());
                                      ArrayList<categories> lst=pt.cat();
                                      for(categories c:lst){                                       
                                     %>
-                                    <option><%= c.getCname() %></option>
+                                    <option value="<%= c.getCid() %>"><%= c.getCname() %></option>
                                     <%
                                         }
-                                     %>
+                                    %>
 
 
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="formGroupExampleInput">Post Title</label>
-                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                                <input name="title" type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
                             </div>
 
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Enter Post</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                <textarea name="post" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Enter Code</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
+                                <textarea  name="code" class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
                             </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Save Post</button>
+                            </div>
+                            
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -255,7 +257,7 @@ User user=(User)session.getAttribute("currentUser");
         <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
         <script>
             $(document).ready(function () {
                 let editStatus = false;
@@ -274,6 +276,31 @@ User user=(User)session.getAttribute("currentUser");
                         editStatus = false;
                         $(this).text("Edit");
                     }
+                });
+            });
+        </script>
+
+        <!--code for post details-->
+        <script>
+            $(document).ready(function (e) {
+                $("#addPostForm").on("submit", function (event) {
+                    event.preventDefault();
+                    $.ajax({
+                        url: "addPostServlet",
+                        type: "POST",
+                        data: $("#addPostForm").serialize(),
+                        success: function (result) {
+                            if(result===("done")){
+                                swal("Post save succesfully", "It's pretty, isn't it?");
+                                $("#addPostForm").trigger("reset");
+                                $("#heading").text("Enter Other Post");
+                            }
+                            else{
+                                swal("Post Not save", "Enter all deatils.?");
+                            }
+                        },
+                        processData: false
+                    });
                 });
             });
         </script>

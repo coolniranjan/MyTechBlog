@@ -4,6 +4,7 @@
  */
 package com.tech.dao;
 
+import com.tech.entity.PostDeatils;
 import com.tech.entity.categories;
 import java.sql.*;
 import java.util.ArrayList;
@@ -34,5 +35,22 @@ public class PostCatDao {
         }
         return list;
 
+    }
+    
+    public boolean savePost(PostDeatils dt){
+       boolean f=false;
+        try {
+            String query = "insert into post(pTitle,pPost,pCode,catId,userId) values (?,?,?,?,?)";
+            PreparedStatement pstmt = this.con.prepareStatement(query);
+            pstmt.setString(1, dt.getpTitle());
+            pstmt.setString(2, dt.getpContent());
+            pstmt.setString(3, dt.getpCode());
+            pstmt.setInt(4, dt.getCid());
+            pstmt.setInt(5, dt.getUid());
+            pstmt.executeUpdate();
+            f = true;
+        } catch (Exception e) {      
+        }
+        return f;
     }
 }
