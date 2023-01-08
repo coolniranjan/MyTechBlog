@@ -2,6 +2,12 @@
 <%@page errorPage="error.jsp" %>
 <%@page import="jakarta.servlet.http.HttpSession" %>
 <%@page import="com.tech.entity.User" %>
+<%@page import="com.tech.dao.PostCatDao" %>
+<%@page import="java.util.ArrayList" %>
+<%@page import="com.tech.entity.categories" %>
+<%@ page import = "java.io.*,java.util.*,java.sql.*"%>
+<%@page import="com.tech.helper.*" %>
+
 <%
 User user=(User)session.getAttribute("currentUser");
  if (user == null) {
@@ -39,26 +45,14 @@ User user=(User)session.getAttribute("currentUser");
                         <a class="nav-link" href="profile.jsp"> <span class="	fa fa-bell-o"></span> Home<span class="sr-only">(current)</span></a>
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="	fa fa-check-square-o"></span> Categories
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Programming Language</a>
-                            <a class="dropdown-item" href="#">Project Implementation</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Data Structure</a>
-                        </div>
-                    </li>
+
 
                     <li class="nav-item">
                         <a class="nav-link" href="contact.jsp"> <span class="	fa fa-address-card-o"></span> Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.jsp"> <span class="	fa fa-address-card-o"></span> Post</a>
+                        <a class="nav-link " data-toggle="modal" data-target="#exampleModalforPost"> <span class="fa fa-address-card-o"></span> Post</a>
                     </li>
-
-
 
                 </ul>
                 <ul class="navbar-nav mr-right">
@@ -117,7 +111,7 @@ User user=(User)session.getAttribute("currentUser");
                                             </tbody>
                                         </table>
                                     </div>
-                                                    
+
                                     <!--profile edit-->
                                     <div id="profile-edit" style="display: none;">
                                         <h3 class="mt-2">Please Edit Carefully</h3>
@@ -151,12 +145,7 @@ User user=(User)session.getAttribute("currentUser");
 
                                                     </td>
                                                 </tr>
-<!--                                                <tr>
-                                                    <td>New Profile:</td>
-                                                    <td>
-                                                        <input type="file" name="image" class="form-control" >
-                                                    </td>
-                                                </tr>-->
+
 
                                             </table>
 
@@ -186,17 +175,74 @@ User user=(User)session.getAttribute("currentUser");
             </div>
         </nav>
         <!--end of toggle model-->
-        
+
+
+        <!--model for post-->
+
+        <div class="modal fade" id="exampleModalforPost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Enter Post Details..</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Categories</label>
+                                <select class="form-control" id="exampleFormControlSelect1">
+                                    <option selected disabled>--select categories--</option>
+                                    <%
+                                     PostCatDao pt=new PostCatDao(ConnectionProvider.getConnection());
+                                     ArrayList<categories> lst=pt.cat();
+                                     for(categories c:lst){                                       
+                                    %>
+                                    <option><%= c.getCname() %></option>
+                                    <%
+                                        }
+                                     %>
+
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput">Post Title</label>
+                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Enter Post</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Enter Code</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end of model for post-->
+
+
         <!--banner-->
-        
-        
+
+
         <div class="container-fluid m-0 p-0 banner-background">
 
             <div class="jumbotron primary-background text-white">
                 <div class="container">
                     <h3>Welcome to TechBlog  <%= user.getName() %></h3>
                     <p>George Owen was a professor at MIT's Department of Naval Architecture and Marine Engineering between 1915 and 1941, designing more than 200 sailing boats and commercial ships. He was also a competitive sailor and conceived the Tech Dinghy for student </p>
-                    
+
                 </div>
 
             </div>
@@ -209,7 +255,7 @@ User user=(User)session.getAttribute("currentUser");
         <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script src="js/myjs.js" type="text/javascript"></script>
+
         <script>
             $(document).ready(function () {
                 let editStatus = false;

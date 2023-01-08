@@ -19,7 +19,7 @@
     </head>
     <body>
         <div class="container text-center">
-            <img src="img/error.png" class="img-fluid" >
+            <img src="img/error .png" class="img-fluid" >
             <h3 class="display-3">Sorry ! Something went wrong ...</h3>
             <%--<%= exception%>--%>
             <a href="index.jsp" class="btn primary-background btn-lg text-white mt-3">Home </a>
