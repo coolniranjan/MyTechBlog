@@ -4,11 +4,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/web/profile.jsp</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/src/java/com/tech/servlet/addPostServlet.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/src/java/com/tech/dao/UserDao.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/src/java/com/tech/dao/PostCatDao.java</file>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/src/java/com/tech/servlet/LoginServlet.java</file>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/src/java/com/tech/entity/User.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/web/getAllPost.jsp</file>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/src/java/com/tech/servlet/EditServlet.java</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/src/java/com/tech/entity/Message.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/src/java/com/tech/entity/PostDeatils.java</file>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/src/java/com/tech/servlet/LogoutServlet.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/web/show_blog_page.jsp</file>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/web/login.jsp</file>
         </group>
     </open-files>
