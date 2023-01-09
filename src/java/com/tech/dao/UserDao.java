@@ -9,6 +9,7 @@ import com.tech.entity.User;
 import java.sql.*;
 
 public class UserDao {
+
     private Connection con;
 
     public UserDao(Connection con) {
@@ -36,20 +37,20 @@ public class UserDao {
         return f;
 
     }
-    
-    public User GetEmailAndPass(String email,String password){
-        
-        User user=null;
+
+    public User GetEmailAndPass(String email, String password) {
+
+        User user = null;
         try {
-            String query="select * from registration where email=? and password=?";
+            String query = "select * from registration where email=? and password=?";
             PreparedStatement pstmt = con.prepareStatement(query);
             pstmt.setString(1, email);
             pstmt.setString(2, password);
 
             ResultSet set = pstmt.executeQuery();
             if (set.next()) {
-                user=new User();
-                
+                user = new User();
+
 //             data from db
                 String name = set.getString("name");
 //             set to user object
@@ -61,21 +62,18 @@ public class UserDao {
                 user.setGender(set.getString("gender"));
                 user.setAbout(set.getString("about"));
                 user.setDateTime(set.getTimestamp("rdate"));
-                
-                
+
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        
+
         return user;
-    
-}
-    
+
+    }
+
 //    Edit user
-    
-     public boolean updateUser(User user) {
+    public boolean updateUser(User user) {
 
         boolean f = false;
         try {
@@ -85,9 +83,9 @@ public class UserDao {
             p.setString(1, user.getName());
             p.setString(2, user.getEmail());
             p.setString(3, user.getPassword());
-            
+
             p.setString(4, user.getAbout());
-           
+
             p.setInt(5, user.getId());
 
             p.executeUpdate();
@@ -99,5 +97,32 @@ public class UserDao {
         return f;
     }
 
+    public User getUname(int id) {
+        User userbyid = null;
+        try {
+
+            String query = "select * from registration where id=?";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, id);
+            ResultSet set = pstmt.executeQuery();
+            if (set.next()) {
+                userbyid = new User();
+
+//             data from db
+                String name = set.getString("name");
+//             set to user object
+                userbyid.setName(name);
+
+                userbyid.setEmail(set.getString("email"));
+                userbyid.setPassword(set.getString("password"));
+                userbyid.setGender(set.getString("gender"));
+                userbyid.setAbout(set.getString("about"));
+                userbyid.setDateTime(set.getTimestamp("rdate"));
+
+            }
+        } catch (Exception e) {
+        }
+        return userbyid;
+    }
 
 }

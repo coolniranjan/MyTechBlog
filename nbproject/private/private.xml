@@ -5,11 +5,11 @@
         <group>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/web/profile.jsp</file>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/src/java/com/tech/servlet/LoginServlet.java</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/web/navbar.jsp</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/src/java/com/tech/servlet/RegisterServlet.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/src/java/com/tech/entity/User.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/src/java/com/tech/servlet/EditServlet.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/src/java/com/tech/entity/Message.java</file>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/src/java/com/tech/servlet/LogoutServlet.java</file>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/web/login.jsp</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/MyTachBlog/web/index.jsp</file>
         </group>
     </open-files>
 </project-private>

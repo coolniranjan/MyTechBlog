@@ -2,9 +2,9 @@
 <%@page errorPage="error.jsp" %>
 <%@page import="jakarta.servlet.http.HttpSession" %>
 <%@page import="com.tech.entity.User" %>
-<%@page import="com.tech.dao.PostCatDao" %>
+<%@page import="com.tech.dao.*" %>
 <%@page import="java.util.ArrayList" %>
-<%@page import="com.tech.entity.categories" %>
+<%@page import="com.tech.entity.*" %>
 <%@ page import = "java.io.*,java.util.*,java.sql.*"%>
 <%@page import="com.tech.helper.*" %>
 <%@page import="com.blog.servlet.*" %>
@@ -60,11 +60,6 @@ User user=(User)session.getAttribute("currentUser");
                     <li class="nav-item">
                         <a class="nav-link" href="#!" data-toggle="modal" data-target="#exampleModal"> <span class="fa fa-user-circle "></span> <%= user.getName()%> </a>
                     </li>
-
-
-
-                    <!--end of navbar-->
-
                     <!--toggle model-->
 
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -234,43 +229,35 @@ User user=(User)session.getAttribute("currentUser");
         </div>
         <!--end of model for post-->
 
-
-        <!--details of post-->
-        <div class="modal-body row">
-            <div class="col-md-4">
-                <!-- Your category  column here -->
-                <div class="list-group">
-                    <a href="#" onclick="funpost(0,this)" id="allPost" class="c-link list-group-item list-group-item-action active">
-                        All Post
-                    </a>
-                    <%
-                        PostCatDao dao=new PostCatDao(ConnectionProvider.getConnection());
-                        ArrayList<categories> ls=dao.cat();
-                        for(categories c:ls){
-                        
-                    %>
-                    <a  onclick="funpost(<%=c.getCid()%>,this)" class="c-link list-group-item list-group-item-action"><%= c.getCname() %></a>
-                    <%
-                    }
-                    %>
+        <!--end of navbar--> 
 
 
+        <!--deatils of post-->
 
-                </div>
+        <%
+            int id = Integer.parseInt(request.getParameter("post_id"));
+            PostCatDao pto=new PostCatDao(ConnectionProvider.getConnection());
+            PostDeatils dto=pto.postbyid(id);
+            
+            UserDao udObj=new UserDao(ConnectionProvider.getConnection());
+            User usera=udObj.getUname(dto.getUid());
+        %>
+        <div class="card text-center container mt-3 " style="width: 48rem;">
+            <div class="card-header">
+                Posted By : <%= usera.getName()%>
             </div>
-            <!--post column-->
-
-            <div class="col-md-8">                              
-                <div class="container text-center" id="loader">
-                    <i class="fa fa-refresh fa-4x fa-spin"></i>
-                    <h3 class="mt-2">loading...</h3>
-                </div>
-                <div class="container-fluid" id="post-container">
-
-                </div>
+            <div class="card-body">
+                <h5 class="card-title"><%=dto.getpTitle()%></h5>
+                <p class="card-text"><%=dto.getpContent() %></p>
+                <p><code><%=dto.getpCode() %></p></span>
+        <p><%=dto.getUid()%></p>
+                
+            </div>
+            <div class="card-footer text-muted primary-background">
+                <a href="#!"  class="btn btn-outline-light btn-sm"> <i class="fa fa-thumbs-o-up"></i> <span class="like-counter"></span>  </a>
+                <a href="#!" class="btn btn-outline-light btn-sm"> <i class="fa fa-commenting-o"></i> <span>20</span>  </a>
 
             </div>
-
         </div>
 
 
@@ -283,25 +270,25 @@ User user=(User)session.getAttribute("currentUser");
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
         <script>
-                        $(document).ready(function () {
-                            let editStatus = false;
-                            $('#edit-profile-button').click(function ()
-                            {
-                                if (editStatus === false)
-                                {
-                                    $("#profile-details").hide();
-                                    $("#profile-edit").show();
-                                    editStatus = true;
-                                    $(this).text("Back");
-                                } else
-                                {
-                                    $("#profile-details").show();
-                                    $("#profile-edit").hide();
-                                    editStatus = false;
-                                    $(this).text("Edit");
-                                }
-                            });
-                        });
+            $(document).ready(function () {
+                let editStatus = false;
+                $('#edit-profile-button').click(function ()
+                {
+                    if (editStatus === false)
+                    {
+                        $("#profile-details").hide();
+                        $("#profile-edit").show();
+                        editStatus = true;
+                        $(this).text("Back");
+                    } else
+                    {
+                        $("#profile-details").show();
+                        $("#profile-edit").hide();
+                        editStatus = false;
+                        $(this).text("Edit");
+                    }
+                });
+            });
         </script>
 
         <!--code for post details-->
@@ -328,19 +315,19 @@ User user=(User)session.getAttribute("currentUser");
             });
         </script>
         <script>
-            function funpost(cid,temp) {
+            function funpost(cid, temp) {
                 $("#loader").hide();
                 $(".c-link").removeClass("active");
                 $.ajax({
                     url: "getAllPost.jsp",
                     type: "POST",
-                    data: {catid:cid},
+                    data: {catid: cid},
                     success: function (data) {
 
                         $("#post-container").html(data);
                         $(temp).addClass("active");
                     }
-                  
+
                 });
             }
             $(document).ready(function (e) {

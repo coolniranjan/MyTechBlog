@@ -16,6 +16,13 @@ public class PostDeatils {
     private int cid;
     private int uid;
 
+    public PostDeatils(int pid, String pTitle, String pCode, int uid) {
+        this.pid = pid;
+        this.pTitle = pTitle;
+        this.pCode = pCode;
+        this.uid = uid;
+    }
+
     public PostDeatils(String pTitle, String pContent, String pCode) {
         this.pTitle = pTitle;
         this.pContent = pContent;

@@ -49,7 +49,7 @@ User user=(User)session.getAttribute("currentUser");
 
 
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.jsp"> <span class="	fa fa-address-card-o"></span> Contact</a>
+                        <a class="nav-link" href="#!"> <span class="	fa fa-address-card-o"></span> Contact</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " data-toggle="modal" data-target="#exampleModalforPost"> <span class="fa fa-address-card-o"></span> Post</a>
@@ -225,7 +225,7 @@ User user=(User)session.getAttribute("currentUser");
                             <div>
                                 <button type="submit" class="btn btn-primary">Save Post</button>
                             </div>
-                            
+
                         </form>
                     </div>
 
@@ -235,20 +235,44 @@ User user=(User)session.getAttribute("currentUser");
         <!--end of model for post-->
 
 
-        <!--banner-->
+        <!--details of post-->
+        <div class="modal-body row">
+            <div class="col-md-4">
+                <!-- Your category  column here -->
+                <div class="list-group">
+                    <a href="#" onclick="funpost(0,this)" id="allPost" class="c-link list-group-item list-group-item-action active">
+                        All Post
+                    </a>
+                    <%
+                        PostCatDao dao=new PostCatDao(ConnectionProvider.getConnection());
+                        ArrayList<categories> ls=dao.cat();
+                        for(categories c:ls){
+                        
+                    %>
+                    <a  onclick="funpost(<%=c.getCid()%>,this)" class="c-link list-group-item list-group-item-action"><%= c.getCname() %></a>
+                    <%
+                    }
+                    %>
 
 
-        <div class="container-fluid m-0 p-0 banner-background">
 
-            <div class="jumbotron primary-background text-white">
-                <div class="container">
-                    <h3>Welcome to TechBlog  <%= user.getName() %></h3>
-                    <p>George Owen was a professor at MIT's Department of Naval Architecture and Marine Engineering between 1915 and 1941, designing more than 200 sailing boats and commercial ships. He was also a competitive sailor and conceived the Tech Dinghy for student </p>
+                </div>
+            </div>
+            <!--post column-->
+
+            <div class="col-md-8">                              
+                <div class="container text-center" id="loader">
+                    <i class="fa fa-refresh fa-4x fa-spin"></i>
+                    <h3 class="mt-2">loading...</h3>
+                </div>
+                <div class="container-fluid" id="post-container">
 
                 </div>
 
             </div>
+
         </div>
+
 
 
 
@@ -259,25 +283,25 @@ User user=(User)session.getAttribute("currentUser");
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
         <script>
-            $(document).ready(function () {
-                let editStatus = false;
-                $('#edit-profile-button').click(function ()
-                {
-                    if (editStatus === false)
-                    {
-                        $("#profile-details").hide();
-                        $("#profile-edit").show();
-                        editStatus = true;
-                        $(this).text("Back");
-                    } else
-                    {
-                        $("#profile-details").show();
-                        $("#profile-edit").hide();
-                        editStatus = false;
-                        $(this).text("Edit");
-                    }
-                });
-            });
+                        $(document).ready(function () {
+                            let editStatus = false;
+                            $('#edit-profile-button').click(function ()
+                            {
+                                if (editStatus === false)
+                                {
+                                    $("#profile-details").hide();
+                                    $("#profile-edit").show();
+                                    editStatus = true;
+                                    $(this).text("Back");
+                                } else
+                                {
+                                    $("#profile-details").show();
+                                    $("#profile-edit").hide();
+                                    editStatus = false;
+                                    $(this).text("Edit");
+                                }
+                            });
+                        });
         </script>
 
         <!--code for post details-->
@@ -290,12 +314,11 @@ User user=(User)session.getAttribute("currentUser");
                         type: "POST",
                         data: $("#addPostForm").serialize(),
                         success: function (result) {
-                            if(result===("done")){
+                            if (result === ("done")) {
                                 swal("Post save succesfully", "It's pretty, isn't it?");
                                 $("#addPostForm").trigger("reset");
                                 $("#heading").text("Enter Other Post");
-                            }
-                            else{
+                            } else {
                                 swal("Post Not save", "Enter all deatils.?");
                             }
                         },
@@ -304,5 +327,27 @@ User user=(User)session.getAttribute("currentUser");
                 });
             });
         </script>
+        <script>
+            function funpost(cid,temp) {
+                $("#loader").hide();
+                $(".c-link").removeClass("active");
+                $.ajax({
+                    url: "getAllPost.jsp",
+                    type: "POST",
+                    data: {catid:cid},
+                    success: function (data) {
+
+                        $("#post-container").html(data);
+                        $(temp).addClass("active");
+                    }
+                  
+                });
+            }
+            $(document).ready(function (e) {
+                funpost(0);
+                $("#allPost").addClass("active");
+            });
+        </script>
     </body>
 </html>
+
